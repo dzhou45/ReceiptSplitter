@@ -14,6 +14,6 @@ Now I split the receipt by typing who bought which item. Items can be shared so 
 
 ![](https://i.imgur.com/8lVrHye.png)
 
-Here's the result! Most important are the totals for each person. Following that all the items each person bought is displayed.
+Here's the result! Most important are the totals for each person. Following that, all the items each person bought is displayed.
 
 ![](https://i.imgur.com/TE4wVTR.png)
