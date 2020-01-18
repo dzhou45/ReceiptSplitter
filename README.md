@@ -5,10 +5,10 @@ Here's a receipt that I'd like to split among my roommates
 ![](https://i.imgur.com/Bs7ME8J.png)
 
 After making a call to Google's Cloud Vision API for its OCR, I turn that image into this text
-https://imgur.com/a/8BWcEnk
+![](https://i.imgur.com/R91XeHR.png)
 
 Now I split the receipt by typing who bought which item. 
-https://imgur.com/a/RxNwrIw
+![](https://i.imgur.com/8lVrHye.png)
 
 Here's the result!
-https://imgur.com/a/OWTTMpo
+![](https://i.imgur.com/TE4wVTR.png)
