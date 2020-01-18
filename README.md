@@ -2,7 +2,7 @@
 Splits grocery receipts among people who buy together
 
 Here's a receipt that I'd like to split among my roommates
-https://imgur.com/a/RxNwrIw
+![]https://imgur.com/a/RxNwrIw
 
 After making a call to Google's Cloud Vision API for its OCR, I turn that image into this text
 https://imgur.com/a/8BWcEnk
