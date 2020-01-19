@@ -93,6 +93,7 @@ def remove_categories(names):
             names.remove(name)
             removedTaxableCategory = True
 
+
 def is_category(name):
     result = False
     if (name == "\nGROCERY" or name == "\nMEAT" or name == "\nPRODUCE" or name == "\nFROZEN" or name == "\nDAIRY"
@@ -100,6 +101,7 @@ def is_category(name):
             or name == "\nSAVING GRAND TOTAL"):
         result = True
     return result
+
 
 def clean_prices(prices):
     """
