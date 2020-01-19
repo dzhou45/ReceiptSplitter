@@ -6,8 +6,9 @@ from google.cloud import vision
 import os
 import io
 
-#API Credentials
+# API Credentials
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/dzhou/Downloads/vision.json"
+
 
 def get_text(filein, fileout):
     """
@@ -27,6 +28,7 @@ def get_text(filein, fileout):
     file = open(fileout, "w")
     file.write(text[0].description)
     file.close()
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('in_file', help='The image for text detection.')

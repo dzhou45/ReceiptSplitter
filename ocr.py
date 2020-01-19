@@ -12,6 +12,7 @@ import pytesseract
 from PIL import Image
 from transform import four_point_transform
 
+
 # Path to tesseract executable
 # pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe'
 
