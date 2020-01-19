@@ -75,24 +75,8 @@ def split_receipt(filein, fileout, buyerNames):
     buyers = create_buyers(buyerNames)
     # Splitting the cost of the items among their buyers
     split_items(items, buyers)
-
     # Dumps the total for each buyer in a text file, along with all the items they bought
-    file = open(fileout, 'w')
-    total = 0
-    # Displays the total cost for each buyer
-    for buyer in buyers:
-        file.write(buyer.name + "\n")
-        file.write(str(sum(buyer.splitprice)) + "\n\n")
-        total += sum(buyer.splitprice)
-    file.write("Total: " + str(total) + "\n")
-    file.write("Item count: " + str(len(items)) + "\n")
-    # Displays all the items the buyer bought
-    for buyer in buyers:
-        file.write("\n" + buyer.name + "\n")
-        for i in range(len(buyer.items)):
-            file.write(buyer.items[i].name + "\n")
-            file.write(str(buyer.splitprice[i]) + "\n")
-    file.close()
+    display_totals(items, buyers, fileout)
 
 
 def remove_categories(names):
@@ -150,6 +134,26 @@ def split_items(items, buyers):
             if (buyer.name in list(buyerName)):
                 buyer.items.append(item)
                 buyer.splitprice.append(float(item.price) / len(list(buyerName)))
+
+
+def display_totals(items, buyers, fileout):
+    # Dumps the total for each buyer in a text file, along with all the items they bought
+    file = open(fileout, 'w')
+    total = 0
+    # Displays the total cost for each buyer
+    for buyer in buyers:
+        file.write(buyer.name + "\n")
+        file.write(str(sum(buyer.splitprice)) + "\n\n")
+        total += sum(buyer.splitprice)
+    file.write("Total: " + str(total) + "\n")
+    file.write("Item count: " + str(len(items)) + "\n")
+    # Displays all the items the buyer bought
+    for buyer in buyers:
+        file.write("\n" + buyer.name + "\n")
+        for i in range(len(buyer.items)):
+            file.write(buyer.items[i].name + "\n")
+            file.write(str(buyer.splitprice[i]) + "\n")
+    file.close()
 
 
 parser = argparse.ArgumentParser()
