@@ -46,6 +46,7 @@ def split_receipt(filein, fileout, buyerNames):
     :param buyerNames: the people who are splitting this receipt
     :return:
     """
+
     file = open(filein, 'r')
     filetext = file.read()
     file.close()
@@ -59,7 +60,7 @@ def split_receipt(filein, fileout, buyerNames):
     # Remove the dollar sign on the prices for easier calculations
     clean_prices(prices)
 
-    # Program stops if you don't have the same number of item names as item prices
+    # Stops program if you don't have the same number of item names as item prices
     # Print statements will allow you to see what went wrong
     if (len(names) != len(prices)):
         print(names)
@@ -69,38 +70,23 @@ def split_receipt(filein, fileout, buyerNames):
         raise ValueError("The number of prices doesn't match number of names")
 
     # Create an Item class for each name and price pair
-    items = []
-    for i in range(len(names)):
-        items.append(Item(names[i], prices[i]))
-
+    items = create_items(names, prices)
     # Obtain the names of all the buyers and create Buyer classes for each of them
-    buyerNames = list(buyerNames)
-    buyers = []
-    for i in range(len(buyerNames)):
-        buyers.append(Buyer(buyerNames[i]))
-
-    # Asking the user to input the buyers of each item. Multiple people can share the same item
-    for item in items:
-        print(item.name)
-        print(item.price)
-        buyerName = input("Who bought this item?")
-        item.buyerNames = list(buyerName)
-        # Adding each item to the list of items a buyer bought
-        # Adds the corresponding price after accounting for the sharing of items
-        for buyer in buyers:
-            if (buyer.name in list(buyerName)):
-                buyer.items.append(item)
-                buyer.splitprice.append(float(item.price) / len(list(buyerName)))
+    buyers = create_buyers(buyerNames)
+    # Splitting the cost of the items among their buyers
+    split_items(items, buyers)
 
     # Dumps the total for each buyer in a text file, along with all the items they bought
     file = open(fileout, 'w')
     total = 0
+    # Displays the total cost for each buyer
     for buyer in buyers:
         file.write(buyer.name + "\n")
         file.write(str(sum(buyer.splitprice)) + "\n\n")
         total += sum(buyer.splitprice)
     file.write("Total: " + str(total) + "\n")
     file.write("Item count: " + str(len(items)) + "\n")
+    # Displays all the items the buyer bought
     for buyer in buyers:
         file.write("\n" + buyer.name + "\n")
         for i in range(len(buyer.items)):
@@ -116,9 +102,11 @@ def remove_categories(names):
     removedTaxableCategory = False
     for name in names:
         if (name == "\nGROCERY" or name == "\nMEAT" or name == "\nPRODUCE" or name == "\nFROZEN" or name == "\nDAIRY"
-                or name == "\nH.B.A." or name == "\nBAKERY" or name == "\nGROUP 20" or name == "\nTOTAL"
-                or name == "\nSAVING GRAND TOTAL"):
+                or name == "\nH.B.A." or name == "\nBAKERY" or name == "\nGROUP 20"
+                or name == "\nTOTAL" or name == "\nSAVING GRAND TOTAL"):
             names.remove(name)
+        # Some item names are "TAXABLE GROCERY" and so we should only remove the first occurrence of "TAXABLE GROCERY"
+        # because the first occurrence is the category
         if (name == "\nTAXABLE GROCERY" and removedTaxableCategory == False):
             names.remove(name)
             removedTaxableCategory = True
@@ -130,6 +118,38 @@ def clean_prices(prices):
     """
     for i in range(len(prices)):
         prices[i] = prices[i][1:-2]
+
+
+def create_items(names, prices):
+    # Create an Item class for each name and price pair
+    items = []
+    for i in range(len(names)):
+        items.append(Item(names[i], prices[i]))
+    return items
+
+
+def create_buyers(buyerNames):
+    # Obtain the names of all the buyers and create Buyer classes for each of them
+    buyerNames = list(buyerNames)
+    buyers = []
+    for i in range(len(buyerNames)):
+        buyers.append(Buyer(buyerNames[i]))
+    return buyers
+
+
+def split_items(items, buyers):
+    # Asking the user to input the buyers of each item. Multiple people can share the same item
+    for item in items:
+        print(item.name)
+        print(item.price)
+        buyerName = input("Who bought this item?")
+        item.buyerNames = list(buyerName)
+        # Adding each item to the list of items a buyer bought
+        # Adds the corresponding price after accounting for the sharing of items
+        for buyer in buyers:
+            if (buyer.name in list(buyerName)):
+                buyer.items.append(item)
+                buyer.splitprice.append(float(item.price) / len(list(buyerName)))
 
 
 parser = argparse.ArgumentParser()
