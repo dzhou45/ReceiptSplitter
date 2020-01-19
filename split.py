@@ -84,17 +84,22 @@ def remove_categories(names):
     Removes the names of categories of items
     """
     removedTaxableCategory = False
+    # Keeps all names that aren't names of categories (we want the names of items)
+    names[:] = [name for name in names if not is_category(name)]
     for name in names:
-        if (name == "\nGROCERY" or name == "\nMEAT" or name == "\nPRODUCE" or name == "\nFROZEN" or name == "\nDAIRY"
-                or name == "\nH.B.A." or name == "\nBAKERY" or name == "\nGROUP 20"
-                or name == "\nTOTAL" or name == "\nSAVING GRAND TOTAL"):
-            names.remove(name)
         # Some item names are "TAXABLE GROCERY" and so we should only remove the first occurrence of "TAXABLE GROCERY"
         # because the first occurrence is the category
         if (name == "\nTAXABLE GROCERY" and removedTaxableCategory == False):
             names.remove(name)
             removedTaxableCategory = True
 
+def is_category(name):
+    result = False
+    if (name == "\nGROCERY" or name == "\nMEAT" or name == "\nPRODUCE" or name == "\nFROZEN" or name == "\nDAIRY"
+            or name == "\nH.B.A." or name == "\nBAKERY" or name == "\nGROUP 20" or name == "\nTOTAL"
+            or name == "\nSAVING GRAND TOTAL"):
+        result = True
+    return result
 
 def clean_prices(prices):
     """
